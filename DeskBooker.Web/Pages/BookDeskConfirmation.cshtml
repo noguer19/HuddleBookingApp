@@ -1,0 +1,32 @@
+﻿@page
+@using DeskBooker.Core.Domain
+@model BookDeskConfirmationModel
+@{
+    ViewData["Title"] = "Book Desk Confirmation";
+    var bookingType = Model.DeskBookingResult.BookingTypeId == (int)BookingTypes.Desk ? "desk" : "meeting room";
+}
+
+<h1 class="display-4">Your @bookingType is booked</h1>
+<p class="lead">
+    at our office in Managua
+</p>
+<p>
+    Hi @Model.DeskBookingResult.FirstName
+</p>
+<p>
+    A @bookingType was booked for you
+    on <strong>@Model.DeskBookingResult.Date.ToShortDateString()</strong>.<br />
+    @if(Model.DeskBookingResult.BookingTypeId == (int)BookingTypes.MeetingRoom)
+    {
+      <span>from<b> @Model.DeskBookingResult.BookingStartTime.Value.ToString("hh:mm tt")</b> to <b>@Model.DeskBookingResult.BookingEndTime.Value.ToString("hh:mm tt")</b></span> <br />
+    }
+    Your booking number is <strong>@Model.DeskBookingResult.DeskBookingId</strong>.<br />
+    We're looking forward to seeing you!
+</p>
+<p>
+    Your Huddle team.
+</p>
+
+<div>
+    <a class="btn-primary btn" style="margin-top: 25px" asp-area="" asp-page="/BookDesk">Book another desk or meeting room</a>
+</div>

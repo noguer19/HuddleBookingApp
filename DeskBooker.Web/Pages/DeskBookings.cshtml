@@ -1,0 +1,54 @@
+﻿@page
+@model DeskBookingsModel
+@{
+    ViewData["Title"] = "Desk Bookings";
+}
+
+<h1 class="display-4">List of Bookings</h1>
+
+<p class="lead">Here you see a table with all desk and meeting room bookings ordered by date.</p>
+
+<hr />
+
+<table class="table table-striped table-bordered dt-responsive nowrap">
+    <thead class="thead-light">
+        <tr>
+            <th>Date</th>
+            <th>Desk Id</th>
+            <th>Email</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Booking Type</th>
+            <th>Meeting Room</th>
+            <th>Time Start</th>
+            <th>Time End</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var deskBooking in Model.DeskBookings)
+        {
+            <tr>
+                <td>@deskBooking.Date.ToShortDateString()</td>
+                <td>@deskBooking.DeskId</td>
+                <td>@deskBooking.Email</td>
+                <td>@deskBooking.FirstName</td>
+                <td>@deskBooking.LastName</td>
+                <td>@deskBooking.BookingType</td>
+                <td>@deskBooking.MeetingRoom?.RoomName</td>
+                <td>
+                    @{
+                        var startTime = deskBooking.BookingStartTime == null ? "N/A" : deskBooking.BookingStartTime.Value.ToString("hh:mm tt");
+                    }
+                    @startTime
+                </td>
+                <td>
+                    @{
+                        var endTime = deskBooking.BookingEndTime == null ? "N/A" : deskBooking.BookingEndTime.Value.ToString("hh:mm tt");
+                    }
+                    @endTime
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

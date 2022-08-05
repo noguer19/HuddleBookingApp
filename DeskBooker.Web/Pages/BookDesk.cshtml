@@ -1,0 +1,90 @@
+﻿@page
+@using DeskBooker.Core.Domain
+@model BookDeskModel
+@{
+    ViewData["Title"] = "Book a Desk";
+    var bookingTimeWrapperDisplay = @Model.DeskBookingRequest.BookingTypeId == (int)BookingTypes.Desk ? "none" : "block";
+}
+
+<h1 class="display-4">Book a desk or a meeting room</h1>
+<p class="lead">at our office in <b>Managua</b> for a full day, or book one our meeting rooms for the specific time you need it.</p>
+
+<form method="post">
+
+    <div class="form-group">
+        <label asp-for="DeskBookingRequest.FirstName" class="control-label"></label>
+        <input asp-for="DeskBookingRequest.FirstName" class="form-control">
+        <span asp-validation-for="DeskBookingRequest.FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DeskBookingRequest.LastName" class="control-label"></label>
+        <input asp-for="DeskBookingRequest.LastName" class="form-control">
+        <span asp-validation-for="DeskBookingRequest.LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DeskBookingRequest.Email" class="control-label"></label>
+        <input asp-for="DeskBookingRequest.Email" class="form-control">
+        <span asp-validation-for="DeskBookingRequest.Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DeskBookingRequest.Date" class="control-label"></label>
+        <input asp-for="DeskBookingRequest.Date" asp-format="{0:dd/MM/yyyy}" class="form-control">
+        <span asp-validation-for="DeskBookingRequest.Date" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DeskBookingRequest.BookingTypeId" class="control-label"></label>
+        <select id="bookingTypeId" class="form-control"
+                asp-for="DeskBookingRequest.BookingTypeId"
+                asp-items="Html.GetEnumSelectList<BookingTypes>()">
+        </select>
+        <span asp-validation-for="DeskBookingRequest.BookingTypeId" class="text-danger"></span>
+    </div>
+
+    <div id="bookingTimeWrapper" style="display: @bookingTimeWrapperDisplay" class="mb-3">
+        <div class="form-group">
+            <label asp-for="DeskBookingRequest.BookingStartTime" class="control-label"></label>
+            <input asp-for="DeskBookingRequest.BookingStartTime" class="form-control">
+            <span asp-validation-for="DeskBookingRequest.BookingStartTime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DeskBookingRequest.BookingEndTime" class="control-label"></label>
+            <input asp-for="DeskBookingRequest.BookingEndTime" class="form-control">
+            <span asp-validation-for="DeskBookingRequest.BookingEndTime" class="text-danger"></span>
+        </div>
+
+        <label asp-for="DeskBookingRequest.MeetingRoomId" class="control-label"></label>
+        <select id="meetingRoomId" class="form-control"
+                asp-for="DeskBookingRequest.MeetingRoomId"
+                asp-items="Model.MeetingRooms">
+        </select>
+        <span asp-validation-for="DeskBookingRequest.MeetingRoomId" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Book a desk</button>
+
+</form>
+
+@section scripts {
+<script>
+    $(function() {
+        $(document).on("change", "#bookingTypeId", function() {
+            const bookingTypeId = parseInt($(this).val());
+            const meetingRoomType = @((int)BookingTypes.MeetingRoom);
+            if (bookingTypeId === meetingRoomType) {
+                $("#bookingTimeWrapper").show();
+            }
+            else {
+                $("#DeskBookingRequest_BookingStartTime").val("");
+                $("#DeskBookingRequest_BookingEndTime").val("");
+                $("#bookingTimeWrapper").hide();
+            }
+        })
+    });
+</script>
+}
