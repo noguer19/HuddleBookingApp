@@ -9,5 +9,5 @@ public interface IDeskBookingRepository
 {
     void Save(DeskBooking deskBooking);
     IEnumerable<DeskBooking> GetAll();
-    bool IsMeetingRoomAvailable(DateTime date, DateTime startTime, DateTime endTime, int meetingRoomId);
+    bool IsMeetingRoomAvailable(DateTime date, DateTime? startTime, DateTime? endTime, int? meetingRoomId);
 }
