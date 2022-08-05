@@ -27,14 +27,14 @@ public class DeskBookingRepository : IDeskBookingRepository
         _context.SaveChanges();
     }
 
-    public bool IsMeetingRoomAvailable(DateTime date, DateTime startTime, DateTime endTime, int meetingRoomId)
+    public bool IsMeetingRoomAvailable(DateTime date, DateTime? startTime, DateTime? endTime, int? meetingRoomId)
     {
         var meetingRoomBookings = _context.DeskBooking.Where(d => d.BookingTypeId == (int)BookingTypes.MeetingRoom && d.Date == date && d.MeetingRoomId == meetingRoomId).ToList();
         bool result = true;
         foreach (var booking in meetingRoomBookings)
         {
-            var newBookingStartTimeOnly = startTime.TimeOfDay;
-            var newBookingEndTimeOnly = endTime.TimeOfDay;
+            var newBookingStartTimeOnly = startTime.Value.TimeOfDay;
+            var newBookingEndTimeOnly = endTime.Value.TimeOfDay;
             var existingBookingStartTimeOnly = booking.BookingStartTime.Value.TimeOfDay;
             var existingBookingEndTimeOnly = booking.BookingEndTime.Value.TimeOfDay;
             if ((newBookingStartTimeOnly >= existingBookingStartTimeOnly && newBookingStartTimeOnly < existingBookingEndTimeOnly) ||
