@@ -28,6 +28,7 @@ public class DeskBookingRequestProcessor : IDeskBookingRequestProcessor
 
         if (request.BookingTypeId == (int)BookingTypes.Desk)
         {
+            request.MeetingRoomId = null;
             var allBookings = _deskBookingRepository.GetAll();
             var alreadyBooked = allBookings.Any(b => b.Email == request.Email && b.BookingTypeId == (int)BookingTypes.Desk && b.Date == request.Date);
             if (alreadyBooked)

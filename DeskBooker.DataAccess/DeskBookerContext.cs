@@ -26,16 +26,16 @@ public class DeskBookerContext : DbContext
     private void SeedData(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Desk>().HasData(
-          new Desk { Id = 1, Description = "Close to left side windows" },
-          new Desk { Id = 2, Description = "Close to men bathroom" },
-          new Desk { Id = 3, Description = "Close to women bathroom" },
-          new Desk { Id = 4, Description = "Close to right side windows" },
-          new Desk { Id = 5, Description = "Close to front side windows" },
-          new Desk { Id = 6, Description = "Close to front side windows" },
-          new Desk { Id = 7, Description = "Close to front side windows" },
-          new Desk { Id = 8, Description = "Close to front side windows" },
-          new Desk { Id = 9, Description = "Close to right side windows" },
-          new Desk { Id = 10, Description = "Close to right side windows" }
+          new Desk { Id = 1, Description = "Desk 1 - Close to left side windows" },
+          new Desk { Id = 2, Description = "Desk 2 - Close to men bathroom" },
+          new Desk { Id = 3, Description = "Desk 3 - Close to women bathroom" },
+          new Desk { Id = 4, Description = "Desk 4 - Close to right side windows" },
+          new Desk { Id = 5, Description = "Desk 5 - Close to front side windows" },
+          new Desk { Id = 6, Description = "Desk 6 - Close to front side windows" },
+          new Desk { Id = 7, Description = "Desk 7 - Close to front side windows" },
+          new Desk { Id = 8, Description = "Desk 8 - Close to front side windows" },
+          new Desk { Id = 9, Description = "Desk 9 - Close to right side windows" },
+          new Desk { Id = 10, Description = "Desk 10 - Close to right side windows" }
         );
 
         modelBuilder.Entity<MeetingRoom>().HasData(
@@ -65,6 +65,35 @@ public class DeskBookerContext : DbContext
                 RoomName = "Sacuanjoche",
                 ImageUrl = "https://huddlenetwork.com/wp-content/uploads/elementor/thumbs/Sala-de-reuniones-Espacio-de-trabajo-2-scaled-oy6g4gq3fidu7me7vbvabxtzw6yelbzl9cakp950qo.jpg",
                 RoomDescription = "Meeting room with space for up to 4 peole, perfect for small teams meetings. This room is equiped with a 42\" TV, 4 confortable chairs and a rounded table."
+            });
+
+
+        modelBuilder.Entity<DeskBooking>().HasData(
+            new DeskBooking
+            {
+                Id = 1,
+                BookingTypeId = 1,
+                FirstName = "Luis",
+                LastName = "Noguera",
+                Email = "luisn@nicasource.com",
+                Active = true,
+                Date = new DateTime(2022, 05, 05),
+                DeskId = 1,
+                Notes = "Test Desk Booking"
+            },
+            new DeskBooking
+            {
+                Id = 2,
+                BookingTypeId = 2,
+                FirstName = "Jeeson",
+                LastName = "López",
+                Email = "jlopez@nicasource.com",
+                Active = true,
+                Date = new DateTime(2022, 05, 05),
+                Notes = "Test Meeting Room Booking",
+                MeetingRoomId = 1,
+                BookingStartTime = new DateTime(2022, 05, 05, 10, 0, 0),
+                BookingEndTime = new DateTime(2022, 05, 05, 11, 0, 0)
             });
     }
 }
