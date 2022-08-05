@@ -28,8 +28,8 @@ public class DeskBookingRequestProcessor : IDeskBookingRequestProcessor
 
         if (request.BookingTypeId == (int)BookingTypes.Desk)
         {
-            var alreadyBooked = _deskBookingRepository.GetAll().Any(b => b.Email == request.Email && b.BookingTypeId == (int)BookingTypes.Desk && b.Date == request.Date);
-
+            var allBookings = _deskBookingRepository.GetAll();
+            var alreadyBooked = allBookings.Any(b => b.Email == request.Email && b.BookingTypeId == (int)BookingTypes.Desk && b.Date == request.Date);
             if (alreadyBooked)
             {
                 deskBookingResult.Code = DeskBookingResultCode.RepeatedDeskBooking;
@@ -51,7 +51,7 @@ public class DeskBookingRequestProcessor : IDeskBookingRequestProcessor
 
         if (request.BookingTypeId == (int)BookingTypes.MeetingRoom)
         {
-            var isMeetingRoomAvailable = _deskBookingRepository.IsMeetingRoomAvailable(request.Date, request.BookingStartTime.Value, request.BookingEndTime.Value, request.MeetingRoomId.Value);
+            var isMeetingRoomAvailable = _deskBookingRepository.IsMeetingRoomAvailable(request.Date, request.BookingStartTime, request.BookingEndTime, request.MeetingRoomId);
             if (!isMeetingRoomAvailable)
             {
                 deskBookingResult.Code = DeskBookingResultCode.MeetingRoomNotAvailable;
